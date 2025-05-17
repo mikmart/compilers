@@ -1,0 +1,10 @@
+echo: echo.sh
+	./echo.sh > echo
+	chmod +x echo
+
+elfh: elfh.sh
+	./elfh.sh > elfh
+	chmod +x elfh
+
+loop: loop.s
+	arm-linux-gnueabi-gcc -o loop loop.s -static -nostdlib
