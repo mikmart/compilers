@@ -1,3 +1,7 @@
+quit: quit.sh
+	./quit.sh > quit
+	chmod +x quit
+
 echo: echo.sh
 	./echo.sh > echo
 	chmod +x echo

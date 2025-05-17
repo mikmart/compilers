@@ -9,4 +9,4 @@
 * Next stop: output an ELF header and exit gracefully: `elfh.sh`
 * Then we want to be able to process input: `echo.sh`
 * With echo we also had to investigate loops.
-* We will also need to do conditionals and comparisons: `comp.sh`
+* Quit on end of file or "control character" Q, conditionals: `quit.sh`
