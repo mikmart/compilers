@@ -1,5 +1,8 @@
 # Bootstrapping a compiler
 
+* `1c.sh` is a script that outputs a 1lang compiler in machine code.
+* `1c.1.sh` is a script that outputs 1lang code for a 1lang compiler.
+
 ## Motivation
 
 * Inspiration: https://www.youtube.com/watch?v=nQkW6sOvOz4
@@ -24,11 +27,19 @@
 * With echo we also had to investigate loops.
 * Quit on end of file or "control character" Q, conditionals: `quit.sh`
 * Extend interpretation and conditional branching: `quo.sh`
-* Add macro definitions and expansions to get our first interpreter: `intp.sh`
+* Add macro definitions and expansions: `def.sh`
+* By adding the ELF header output we get a compiler: `1c.sh`
   ```
-  printf '\1h\5Hello\1w\5Worldh\2 \w\2!\2\n\0' | ./intp
+  $ printf '\1h\5Hello\1w\5Worldh\2 w\2!\2\n\0' | ./1c | xxd
+    00000000: 7f45 4c46 0101 0100 0000 0000 0000 0000  .ELF............
+    00000010: 0200 2800 0100 0000 5500 0400 3400 0000  ..(.....U...4...
+    00000020: 0000 0000 0000 0005 3400 2000 0100 0000  ........4. .....
+    00000030: 0000 0000 0100 0000 5400 0000 5400 0400  ........T...T...
+    00000040: 0000 0000 000f 0000 0000 0200 0700 0000  ................
+    00000050: 0010 0000 4865 6c6c 6f20 576f 726c 6421  ....Hello World!
+    00000060: 0a 
   ```
-* By adding the ELF header output we get a compiler: `comp.sh`
+* Next step: re-write the compiler in our new language: `1c.1.sh`
 
 ## Notes
 

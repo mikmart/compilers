@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Prints a 32-bit System V ARM Thumb ELF executable to standard output.
-# Reads input and interprets quoting and quit commands.
+# Prints a 1lang compiler executable in machine code to stdout.
 
 # ELF header
 printf "\x7f\x45\x4c\x46" # 0x7f "ELF" magic number

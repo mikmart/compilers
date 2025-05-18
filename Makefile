@@ -1,10 +1,21 @@
-comp: comp.sh
-	./comp.sh > comp
-	chmod +x comp
+1c-2: 1c-1 1c.1
+	./1c-1 < 1c.1 > 1c-2
+	chmod +x 1c-2
 
-intp: intp.sh
-	./intp.sh > intp
-	chmod +x intp
+1c-1: 1c 1c.1
+	./1c < 1c.1 > 1c-1
+	chmod +x 1c-1
+
+1c.1: 1c.1.sh
+	./1c.1.sh > 1c.1
+
+1c: 1c.sh
+	./1c.sh > 1c
+	chmod +x 1c
+
+def: def.sh
+	./def.sh > def
+	chmod +x def
 
 quo: quo.sh
 	./quo.sh > quo
@@ -26,4 +37,4 @@ loop: loop.s
 	arm-linux-gnueabi-gcc -o loop loop.s -static -nostdlib
 
 clean:
-	rm loop.o loop elfh echo quit quo def comp
+	rm loop.o loop elfh echo quit quo def
