@@ -24,7 +24,11 @@
 * With echo we also had to investigate loops.
 * Quit on end of file or "control character" Q, conditionals: `quit.sh`
 * Extend interpretation and conditional branching: `quo.sh`
-* Macro definitions and expansions: this is the "first language": `def.sh`
+* Add macro definitions and expansions to get our first interpreter: `intp.sh`
+  ```
+  printf '\1h\5Hello\1w\5Worldh\2 \w\2!\2\n\0' | ./intp
+  ```
+* By adding the ELF header output we get a compiler: `comp.sh`
 
 ## Notes
 
