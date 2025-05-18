@@ -1,3 +1,7 @@
+def: def.sh
+	./def.sh > def
+	chmod +x def
+
 quo: quo.sh
 	./quo.sh > quo
 	chmod +x quo
@@ -16,3 +20,6 @@ elfh: elfh.sh
 
 loop: loop.s
 	arm-linux-gnueabi-gcc -o loop loop.s -static -nostdlib
+
+clean:
+	rm loop.o loop elfh echo quit quo def

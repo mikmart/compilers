@@ -10,6 +10,7 @@
 * https://shell-storm.org/online/Online-Assembler-and-Disassembler
 * https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARM_QRC0006_UAL16.pdf
 * https://www.chromium.org/chromium-os/developer-library/reference/linux-constants/syscalls/#arm-32-biteabi
+* http://bear.ces.cwru.edu/eecs_382/ARM7-TDMI-manual-pt3.pdf
 
 ## Steps
 
@@ -22,6 +23,8 @@
 * Then we want to be able to process input: `echo.sh`
 * With echo we also had to investigate loops.
 * Quit on end of file or "control character" Q, conditionals: `quit.sh`
+* Extend interpretation and conditional branching: `quo.sh`
+* Macro definitions and expansions: this is the "first language": `def.sh`
 
 ## Notes
 
@@ -38,3 +41,12 @@ If comparison not equal:
     NNd1 => Jump ahead 0xNN + 1 instructions.
     ffd1 => Go to next instruction (nop).
 ```
+
+### Moving
+
+Unshifted move of low registers: `0x 0000 0000 00[sr c][dst]`
+
+### Stack operations
+
+Pop low registers: `NNb4` where has flags for registers: `...[r2][r1][r0]`.
+Push is the same but `NNbc`.
