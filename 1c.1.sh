@@ -5,12 +5,26 @@
 # -- Byte code definitions
 
 printf "\1{\x06"  # (3) { := Push a loop
-printf "\x79\x46" # mov  r1, pc // Organise a loop. PC relative would be better,
-printf "\x03\x39" # subs r1, #3 // but I won't track the offsets manually fuck that.
-printf "\x02\xb4" # push {r1}   // (-3 to stay in Thumb, dunno why it's not preserved)
+printf "\x79\x46" # mov  r1, pc
+printf "\x03\x39" # subs r1, #3 // 4 would exit Thumb mode, dunno why.
+printf "\x02\xb4" # push {r1}
 
-printf "\1}\x02"  # (1) } := Jump to the Beginning of a Loop (Continue)
-printf "\x00\xbd" # pop  {pc}   // Return to the top of the loop
+printf "\1}\x02"  # (1) } := Jump to the beginning of a loop (continue)
+printf "\x00\xbd" # pop  {pc}
+
+printf "\1^\x02"  # (1) ^ := Discard current loop return address (break)
+printf "\x02\xbc" # pop  {r1}
+
+printf "\1=\x01"  # (1) = := [n=] Compare r0 to preceding
+printf "\x28"     # cmp  r0, #n
+
+printf "\1?\x03"  # (2) ? := [n?] Skip n ops unless equal
+printf "\xd1"     # bne  #2(n + 2)
+printf "\x00\xbf" # nop  // Pad
+
+printf '\1!\x03'  # (2) ! := [n!] Skip n ops
+printf "\xe0"     # b    #2(n + 2)
+printf "\x00\xbf" # nop  // Pad
 
 printf "\1<\x10"  # (8) < := Read a byte from stdin
 printf "\x01\xb4" # push {r0}   // Make space on the stack
@@ -39,16 +53,10 @@ printf "\x01\x20" # movs r0, #0x01 // stdout
 printf "\x04\x27" # movs r7, #0x04 // SYS_write
 printf "\x00\xdf" # svc  #0
 
-printf "\1Q\x04"  # (2) Q := Exit
+printf "\1Q\x05"  # (3) Q := [nQ] Exit with status code n
+printf "\x20"     # mov  r0, #n 
 printf "\x01\x27" # mov  r7, #1 // SYS_exit
 printf "\x00\xdf" # svc  #0
-
-printf "\1=\x01"  # (1) = := Compare r0 to preceding [n=]
-printf "\x28"     # cmp  r0, #n
-
-printf "\1?\x03"  # (2) ? := Skip n ops unless equal [n?]
-printf "\xd1"     # bne  #2(n + 2)
-printf "\x00\xbf" # nop  // Pad
 
 # -- Program output starts
 
@@ -56,11 +64,11 @@ printf "H"
 
 printf "\2\x80\2\xa6" # adr  r6, #0x200 // Keep address of byte code table in r6
 
-printf "{"
-printf "<"
+printf "{" # (3)
+printf "<" # (8)
 
-printf "\2\x00=\2\x02?" # Skip Quit (2) unless input is \0
-printf "Q" # (2)
+printf "\2\x00=\2\x03?" # Skip Quit (3) unless input is \0
+printf "\2\x00Q" # (3)
 
 printf "\2\x02=\2\x10?" # Skip Quote (16) unless input is \2
 printf "<" # (8)
@@ -96,5 +104,4 @@ printf "\x00\xdf" # svc  #0
 printf "3" # (7)
 printf "}" # (1)
 
-printf "\2\x01\2\x20" # mov  r0, #1 // Something went wrong if we reached this
-printf "Q" # (2)
+printf "\2\x01Q" # (3)

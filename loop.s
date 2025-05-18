@@ -5,9 +5,12 @@
 .syntax unified  // Somehow disables Error: instruction not supported in Thumb16 mode -- `subs r1,#3'
 _start:
 
-        mov  r1, pc
-        subs r1, #3
-        push {r1}
-        pop  {pc}
-
-loop:   b   loop
+        movs r0, #0
+repeat:
+        adds r0, #1
+        cmp  r0, #0
+        beq  break
+        b    repeat
+break:
+        movs r7, #1
+        svc  #0

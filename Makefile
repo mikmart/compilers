@@ -34,7 +34,7 @@ elfh: elfh.sh
 	chmod +x elfh
 
 loop: loop.s
-	arm-linux-gnueabi-gcc -o loop loop.s -static -nostdlib
+	arm-linux-gnueabi-gcc -g -o loop loop.s -static -nostdlib
 
 clean:
 	rm loop.o loop elfh echo quit quo def
