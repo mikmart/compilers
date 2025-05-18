@@ -1,3 +1,7 @@
+quo: quo.sh
+	./quo.sh > quo
+	chmod +x quo
+
 quit: quit.sh
 	./quit.sh > quit
 	chmod +x quit

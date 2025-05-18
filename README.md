@@ -1,6 +1,18 @@
 # Bootstrapping a compiler
 
+## Motivation
+
 * Inspiration: https://www.youtube.com/watch?v=nQkW6sOvOz4
+
+## Resources
+
+* https://oicr.on.ca/wp-content/uploads/2018/06/comilers.pdf
+* https://shell-storm.org/online/Online-Assembler-and-Disassembler
+* https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARM_QRC0006_UAL16.pdf
+* https://www.chromium.org/chromium-os/developer-library/reference/linux-constants/syscalls/#arm-32-biteabi
+
+## Steps
+
 * Working on AArch64 Raspberry Pi OS.
 * AArch64 is way too complex to hand assemble so do Thumb instead.
 * Set up compiler toolchain: arm-linux-gnu-gcc
@@ -10,3 +22,19 @@
 * Then we want to be able to process input: `echo.sh`
 * With echo we also had to investigate loops.
 * Quit on end of file or "control character" Q, conditionals: `quit.sh`
+
+## Notes
+
+### Branching
+
+The `bne` instruction does a conditional branch after a compare. In assembly,
+it takes a label which the assembler transforms into a PC relative jump. But,
+we don't have an assembler to do that for us. In the machine code the instruction
+looks like `\xNN\xd1` where the leading byte is the count of 16-bit instructions
+to skip ahead, with 0 indicating "jump over one", etc.:
+
+```
+If comparison not equal:
+    NNd1 => Jump ahead 0xNN + 1 instructions.
+    ffd1 => Go to next instruction (nop).
+```
