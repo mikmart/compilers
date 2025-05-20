@@ -14,6 +14,7 @@
 * https://web.eecs.umich.edu/~prabal/teaching/eecs373-f10/readings/ARM_QRC0006_UAL16.pdf
 * https://www.chromium.org/chromium-os/developer-library/reference/linux-constants/syscalls/#arm-32-biteabi
 * http://bear.ces.cwru.edu/eecs_382/ARM7-TDMI-manual-pt3.pdf
+* https://developer.arm.com/documentation/dui0041/c/Thumb-Procedure-Call-Standard/TPCS-definition/TPCS-register-names?lang=en
 
 ## Steps
 
@@ -40,6 +41,7 @@
     00000060: 0a 
   ```
 * Next step: re-write the compiler in our new language: `1c.1.sh`
+* Next goal: language without non-printable characters: `2c.1.sh`
 
 ## Notes
 
