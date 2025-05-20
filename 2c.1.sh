@@ -77,6 +77,13 @@ printf "<" # (8)
 printf "\2\x00=\2\x03?" # Skip Quit (3) unless input is \0
 printf "\2\x00Q" # (3)
 
+printf "\2\x3b=\2\x10?" # ; => Comment until end of line
+printf "{"              # (3)
+printf "<"              # (8)
+printf "\2\x0a=\2\x01?" # (3)
+printf "^"              # (1)
+printf "}"              # (1)
+
 printf "\2\x27=\2\x10?" # ' => ['n] Quote next byte
 printf "<>" # (8 + 7)
 printf "}" # (1)
