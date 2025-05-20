@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Prints 1lang source code for a 1lang compiler to stdout.
+# Prints 1lang source code for a 2lang compiler to stdout.
 
 # -- Byte code definitions
 
@@ -22,9 +22,16 @@ printf "\1?\x03"  # (2) ? := [n?] Skip n ops unless equal
 printf "\xd1"     # bne  #2(n + 2)
 printf "\x00\xbf" # nop  // Pad
 
+printf "\1L\x03"  # (2) L := [nL] Skip n ops unless less than
+printf "\xda"     # bge  #2(n + 2)
+printf "\x00\xbf" # nop  // Pad
+
 printf '\1!\x03'  # (2) ! := [n!] Skip n ops
 printf "\xe0"     # b    #2(n + 2)
 printf "\x00\xbf" # nop  // Pad
+
+printf "\1-\x01"  # (1) = := [n-] Subtract n from r0
+printf "\x38"     # subs r0, #n
 
 printf "\1<\x10"  # (8) < := Read a byte from stdin
 printf "\x01\xb4" # push {r0}   // Make space on the stack
@@ -70,17 +77,32 @@ printf "<" # (8)
 printf "\2\x00=\2\x03?" # Skip Quit (3) unless input is \0
 printf "\2\x00Q" # (3)
 
-printf "\2\x02=\2\x10?" # Skip Quote (16) unless input is \2
-printf "<" # (8)
-printf ">" # (7)
+printf "\2\x27=\2\x10?" # ' => ['n] Quote next byte
+printf "<>" # (8 + 7)
 printf "}" # (1)
+
+printf "\2\x78=\2\x22?" # x => [xdd] Hex literal
+printf "\2\x00\2\x24"   # movs r4, #0
+printf "{"              # (3)
+printf "<"              # (8)
+printf "\2\x61=\2\x02L" # (3)
+printf "  \2\x30-"      # (1)
+printf "\2\x01!"        # (2)
+printf "  \2\x57-"      # (1)
+printf "\2\x20\2\x44"   # add r0, r4
+printf "\2\x10=\2\x02L" # (3)
+printf "  \2\x04\2\x01" # lsls r4, r0, #4
+printf "  }"            # (1)
+printf ">"              # (7)
+printf "^"              # (1)
+printf "}"              # (1)
 
 printf "\2\x01=\2\x1a?" # Skip Define (26) unless input is \1
 printf "<" # (8)
-printf "\2\x04\2\x46" # mov  r4, r0
+printf "\2\x04\2\x00" # movs  r4, r0
 
 printf "<" # (8)
-printf "\2\x02\2\x46" # mov  r2, r0
+printf "\2\x02\2\x00" # movs  r2, r0
 
 printf "\x011\x0e"
 printf "\x21\x02" # lsls r1, r4, #8 // Offset of byte in byte code table
