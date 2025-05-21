@@ -86,22 +86,22 @@ printf "}"              # (1)
 
 printf "\2\x27=\2\x10?" # ' => ['n] Quote next byte
 printf "<>" # (8 + 7)
-printf "}" # (1)
+printf "}"  # (1)
 
-printf "\2\x78=\2\x22?" # x => [xdd] Hex literal
-printf "\2\x00\2\x24"   # movs r4, #0
-printf "{"              # (3)
+printf "\2\x78=\2\x28?" # x => [xdd] Hex literal
+printf "<"              # (8)
+printf "\2\x61=\2\x02L" # (3)
+printf "  \2\x30-"      # (1)
+printf "\2\x01!"        # (2)
+printf "  \2\x57-"      # (1)
+printf "\2\x04\2\x01"   # lsls r4, r0, #4
 printf "<"              # (8)
 printf "\2\x61=\2\x02L" # (3)
 printf "  \2\x30-"      # (1)
 printf "\2\x01!"        # (2)
 printf "  \2\x57-"      # (1)
 printf "\2\x20\2\x44"   # add r0, r4
-printf "\2\x10=\2\x02L" # (3)
-printf "  \2\x04\2\x01" # lsls r4, r0, #4
-printf "  }"            # (1)
 printf ">"              # (7)
-printf "^"              # (1)
 printf "}"              # (1)
 
 printf "\2\x01=\2\x1a?" # Skip Define (26) unless input is \1
